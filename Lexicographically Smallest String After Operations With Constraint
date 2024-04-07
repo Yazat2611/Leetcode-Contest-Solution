@@ -1,0 +1,46 @@
+class Solution {
+private:
+    int solve(char c) 
+    {
+        return min(int(c - 'a'), 26 - int(c - 'a'));
+    }
+    
+public:
+    string getSmallestString(std::string s, int k) {
+        
+        vector<char> t(s.begin(), s.end());
+        
+        for (int i=0;i<t.size();i++) 
+        {
+            int val = solve(t[i]);
+            
+            if (k >= val) 
+            {
+                k -= val;
+                t[i] = 'a';
+            } 
+            else 
+            {
+                if (k > 0) 
+                {
+                    if (int(t[i]) - k >= int('a')) 
+                    {
+                        t[i] = char(int(t[i]) - k);
+                    } 
+                    else 
+                    {
+                        t[i] = char('z' - (k - 1));
+                    }
+                    
+                    k = 0;
+                }
+                
+                break;
+            }
+        }
+        
+        return string(t.begin(), t.end());
+    }
+};
+
+
